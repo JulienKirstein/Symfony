@@ -33,6 +33,7 @@ class Modify extends AbstractController
     */
     public function modify(Environment $twig, Request $request, $id)
     {
+        // Prepare a form for the user
         $application_allreadymade = $this->getDoctrine()
             ->getRepository(Application::class)
             ->findAll();
@@ -49,6 +50,7 @@ class Modify extends AbstractController
             ->add('save', SubmitType::class, array('label' => "Publier l'application"))
             ->getForm();
 
+        // If the form is submitted and valid, save the data in the database/files
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid())
             {

@@ -17,7 +17,7 @@ class ChangeAccess extends AbstractController
     **/
     public function changeaccess()
     {
-
+        // Change the state of the user to admin if it was a basic user before else to basic
         $session = new Session();
         $IsAdmin = $session->get('IsAdmin');
         if ($IsAdmin != true)

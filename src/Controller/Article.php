@@ -23,6 +23,7 @@ class Article extends AbstractController
     */
     public function article(Environment $twig, $id, Request $request)
     {
+        // Prepare a form for the comment in the current application
         $db = $this->getDoctrine()
             ->getRepository(Application::class)
             ->findAll();
@@ -36,6 +37,7 @@ class Article extends AbstractController
 
         $form->handleRequest($request);
 
+        // If the form is submitted and valid, save the comment in the db and return the same page updated
         if ($form->isSubmitted() && $form->isValid())
             {
                 $comment = $form->getData();

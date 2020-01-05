@@ -22,6 +22,7 @@ class Home extends AbstractController
     */
     public function index(Environment $twig, EntityManagerInterface $em)
     {
+        // In function of the state of the variable admin, give access or not to the user to a specific part of the site
         $session = new Session();
         $IsAdmin = $session->get('IsAdmin');
 

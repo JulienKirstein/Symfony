@@ -26,6 +26,7 @@ class Delete extends AbstractController
      */
     public function Remove($id)
     {
+        // Remove the application by id in the db and files that are bind with the id
         $em = $this->getDoctrine()->getManager();
 
         $to_delete = $this->getDoctrine()

@@ -25,6 +25,7 @@ class NewApplication extends AbstractController
     */
     public function new_application(Environment $twig, Request $request)
     {
+        // Prepare the form
         $application = new Application();
 
         $form = $this->createFormBuilder($application)
@@ -38,6 +39,7 @@ class NewApplication extends AbstractController
 
         $form->handleRequest($request);
 
+        // If the form is submitted and valid, save the new application with the current date
         if ($form->isSubmitted() && $form->isValid())
             {
                 $application = $form->getData();

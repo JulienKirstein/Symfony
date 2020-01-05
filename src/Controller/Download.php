@@ -27,7 +27,7 @@ class Download extends AbstractController
     **/
     public function downloadFileAction($id)
     {
-
+        // download the file by id
         $db = $this->getDoctrine()
             ->getRepository(Application::class)
             ->findAll();
