@@ -1,0 +1,1 @@
+print("logiciel de fpa")

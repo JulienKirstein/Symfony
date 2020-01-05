@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    {% block stylesheets %}
+        {# On charge le CSS de bootstrap depuis le site directement #}
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    {% endblock %}
+</head>
+
+<style>
+    .souligner {text-decoration: underline;}
+</style>
+
+<body>
+    <div class="container">
+        <div id="header" class="jumbotron" align="middle">
+            <img src="{{ asset('image/marque.png') }}" width="300" height="210"/>
+        </div>
+
+        {% if CommentAdded == 1 %}
+            <div class="alert alert-success">Votre commentaire a bien été rajouté</div>
+        {% endif %}
+
+        <p>
+            <a href="{{ path('home') }}" class="btn btn-default">
+                <i class="glyphicon glyphicon-chevron-left"></i>Retour à la liste
+            </a>
+        </p>
+
+        <h3> <p class="souligner">{% for i in range(1, db[id].getEtoiles()) %}★{% endfor %}{{ db[id].getTitle }} ({{ db[id].getDateMiseEnLigne }})</p></h3>
+
+        <img src="{{asset('photos/'~db[id].getPhoto) }}" width="300" height="210"/>
+
+        <h5> {{ db[id].getDescription }} </h5>
+
+        <a class="btn btn-primary btn-lg" href="{{path('download_file', {"id": id})}}">Télécharger</a>
+
+        <h3><p class="souligner">Commentaires: </p></h3>
+
+        {% set index = 0 %}
+        {% for i in db[id].getCommentaire() %}
+            <strong>{{ db[id].getDateMiseEnLigne() }}</strong> : {{ db[id].getCommentaire().getValues[index].getCommentaire() }}<br>
+            {% set index = index + 1 %}
+        {% endfor %}
+
+        <h3><p class="souligner">Ajouter un commentaire</p></h3>
+
+        {{ form_start(form) }}
+
+            <div class="well">
+            {{ form_row(form.Commentaire, {'attr': {'class': "form-control"}}) }}
+            </div>
+
+           {{ form_row(form.save, {'attr': {'class': "btn btn-primary btn-lg"}}) }}
+
+        {{ form_end(form) }}
+
+        <p></p>
+    </div>
+</body>
+
+</html>

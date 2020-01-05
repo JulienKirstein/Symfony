@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    {% block stylesheets %}
+        {# On charge le CSS de bootstrap depuis le site directement #}
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    {% endblock %}
+</head>
+
+<style>
+    .souligner {text-decoration: underline;}
+</style>
+
+{% block javascripts %}
+    <script>
+        function Restrict()
+            {
+                var input = document.getElementById("input");
+                {% set index = 0 %}
+                {% for event in db %}
+                    var str = "{{ event.getTitle }}";
+                    if (str.toLowerCase().includes(input.value.toLowerCase()))
+                        {
+                            document.getElementById("table{{ index }}").style = "display";
+                        }
+                    else
+                        {
+                            document.getElementById("table{{ index }}").style = "display:none";
+                        }
+                    {% set index = index + 1 %}
+                {% endfor %}
+            }
+    </script>
+{% endblock %}
+
+<body>
+    <div class="container">
+        <div id="header" class="jumbotron" align="middle">
+            <img src="{{ asset('image/marque.png') }}" width="300" height="210"/>
+        </div>
+
+        {% if IsAdmin == true %}
+            <a class="btn btn-primary" href="{{path('new_application')}}">Ajouter une nouvelle application</a>
+            <a class="btn btn-danger" href="{{path('changeaccess')}}" style="float: right;">Passer en mode simple utilisateur</a>
+        {% else %}
+            <a class="btn btn-danger" href="{{path('changeaccess')}}" style="float: right;">Passer en mode administrateur</a>
+            <br></br>
+        {% endif %}
+
+        <h3> <p class="souligner">Applications en lignes: </p></h3>
+        <hr></hr>
+
+        <input type="text" id="input" placeholder="Recherche" onchange="Restrict()">
+        <p></p>
+
+        <table class="table table-bordered table-striped">
+        <tr>
+        <th> Etoiles </th>
+        <th> Date de mise en ligne </th>
+        <th> Application </th>
+        <th> Description </th>
+        <th> Voir </th>
+        <th> Télécharger </th>
+        {% if IsAdmin == true %}
+            <th> Modifier </th>
+            <th> Supprimer </th>
+        {% endif %}
+        </tr>
+
+        {% set index = 0 %}
+        {% for event in db %}
+            <tbody style="display:" id="table{{ index }}">
+            <tr class="active">
+            <td> <h5>{% for i in range(1, event.getEtoiles) %}★{% endfor %}</h5></td>
+            <td> <h5> {{ event.getDateMiseEnLigne }}</h5></td>
+            <td> <h5> {{ event.getTitle }} </h5></td>
+            <td> <h5>{{ event.getDescription }}</h5></td>
+            <td> <a class="btn btn-primary" href="{{path('article', {"id" : index})}}">Voir</a></td>
+            <td> <a class="btn btn-primary" href="{{path('download_file', {"id": index})}}">Télécharger</a></td>
+            {% if IsAdmin == true %}
+                <td> <a class="btn btn-primary" href="{{path('modify', {"id": index})}}">Modifier</a></td>
+                <td> <a class="btn btn-primary" href="{{path('delete', {"id": index})}}">Supprimer</a></td>
+            {% endif %}
+            </tr>
+            {% set index = index + 1 %}
+        {% endfor %}
+    </div>
+</body>
+
+</html>
