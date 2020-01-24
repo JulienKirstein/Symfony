@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    {% block stylesheets %}
+        {# Load the css #}
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    {% endblock %}
+</head>
+
+<style>
+    .souligner {text-decoration: underline;}
+</style>
+
+<body>
+    <div class="container">
+        <div id="header" class="jumbotron" align="middle">
+            <img src="{{ asset('image/marque.png') }}" width="300" height="210"/>
+        </div>
+
+        <a href="{{ path('home') }}" class="btn btn-default">
+            <i class="glyphicon glyphicon-chevron-left"></i>Retour à la liste
+        </a>
+
+        <h3><p class="souligner">Nouvelle application: </p></h3>
+
+        {{ form_start(form) }}
+
+            <div class="well">
+            <h4>Titre:<h4/>
+            {{ form_row(form.Title, {'attr': {'class': "form-control"}}) }}
+            </div>
+
+            <div class="well">
+            <h4>Description:<h4/>
+            {{ form_row(form.Description, {'attr': {'class': "form-control"}}) }}
+            </div>
+
+            <div class="well">
+            <h4>Nombre d'étoiles:<h4/>
+            {{ form_row(form.Etoiles, {'attr': {'class': "form-control"}}) }}
+            </div>
+
+            <div class="well">
+            <h4>Photo:<h4/>
+            {{ form_row(form.photo, {'attr': {'class': "form-control"}}) }}
+            </div>
+
+            <div class="well">
+            <h4>Fichier:<h4/>
+            {{ form_row(form.files, {'attr': {'class': "form-control"}}) }}
+            </div>
+
+           {{ form_row(form.save, {'attr': {'class': "btn btn-primary btn-lg"}}) }}
+
+        {{ form_end(form) }}
+
+        </div>
+        <p></p>
+    </div>
+</body>
+
+</html>
